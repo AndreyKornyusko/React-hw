@@ -1,53 +1,107 @@
 import React, { Component } from 'react';
 import AppHeader from './AppHeader';
-import orderJson from '../json/order-history.json';
-import menuJson from '../json/menu.json';
+import Modal from './Modal';
 import OrderHistory from './OrderHistory';
-import DishMenu from './DishMenu';
-import MenuFilter from './MenuFilter';
-import CommentsList from './CommentsList';
-import CommentsForm from './CommentsForm';
-
-const filterMenuDishes = (filter, dishes) =>
-  dishes.filter(dish => dish.name.toLowerCase().includes(filter.toLowerCase()));
+import * as API from '../services/api';
+import OrderHistoryInfoModal from './OrderHistoryInfoModal';
+import OrderHistoryForm from './OrderHistoryForm';
+import Loading from './Loading';
 
 export default class App extends Component {
   state = {
-    filter: '',
-    notes: [],
+    isModalOpen: false,
+    isHistoryModalOpen: false,
+    history: [],
+    info: '',
+    isInfoLoading: false,
+    isLoading: false,
+    error: null,
   };
 
-  handleAddNote = (rating, text) => {
-    this.setState(prevState => ({
-      notes: [{ id: Date.now(), rating, text }, ...prevState.notes],
-    }));
+  openModal = () => {
+    this.setState({ isModalOpen: true });
   };
 
-  handleFilterChange = e => {
-    // console.log(e.target.value);
-    this.setState({
-      filter: e.target.value,
+  closeModal = () => {
+    this.setState({ isModalOpen: false });
+  };
+
+  openHistoryModal = () => {
+    this.setState({ isHistoryModalOpen: true });
+  };
+
+  closeHistoryModal = () => {
+    this.setState({ isHistoryModalOpen: false });
+  };
+
+  componentDidMount() {
+    API.getAllOrderHistoryItems()
+      .then(history => {
+        this.setState({ history });
+      })
+      .catch(error => this.setState({ error, isLoading: false }));
+  }
+
+  handleDeleteItem = id => {
+    API.deleteOrderHistoryItem(id)
+      .then(isOk => {
+        if (!isOk) return;
+
+        this.setState(state => ({
+          history: state.history.filter(item => item.id !== id),
+        }));
+      })
+      .catch(error => this.setState({ error, isLoading: false }));
+  };
+
+  handleShowMoreInfo = id => {
+    this.setState({ isLoading: true });
+    API.getOrderHistoryById(id)
+      .then(item => {
+        this.setState({ info: JSON.stringify(item), isLoading: false });
+        // console.log('this.state', this.state);
+        this.openHistoryModal();
+      })
+      .catch(error => this.setState({ error, isLoading: false }));
+  };
+
+  handleAddOrderHistoryItem = state => {
+    API.addOrderHistoryItem(state).then(newItem => {
+      this.setState(state => ({
+        history: [...state.history, newItem],
+      }));
     });
   };
 
   render() {
-    // console.log('App state', this.state);
-
-    const { filter } = this.state;
-    // console.log('filter', filter);
-
-    const filteredDishes = filterMenuDishes(filter, menuJson);
+    const { isModalOpen, isHistoryModalOpen, isLoading } = this.state;
 
     return (
       <div>
         <AppHeader />
-        <OrderHistory items={orderJson} />
+        <button type="button" onClick={this.openModal}>
+          Open Modal
+        </button>
+        {isModalOpen && <Modal onClose={this.closeModal} />}
 
-        <MenuFilter filter={filter} onFilterChange={this.handleFilterChange} />
+        <OrderHistoryForm onSubmit={this.handleAddOrderHistoryItem} />
 
-        <DishMenu items={filteredDishes} />
-        <CommentsForm onSubmit={this.handleAddNote} />
-        <CommentsList notes={this.state.notes} />
+        <OrderHistory
+          items={this.state.history}
+          onDelete={this.handleDeleteItem}
+          onShowMoreInfo={this.handleShowMoreInfo}
+        />
+
+        {isLoading ? (
+          <Loading />
+        ) : (
+          isHistoryModalOpen && (
+            <OrderHistoryInfoModal
+              onClose={this.closeHistoryModal}
+              info={this.state.info}
+            />
+          )
+        )}
       </div>
     );
   }

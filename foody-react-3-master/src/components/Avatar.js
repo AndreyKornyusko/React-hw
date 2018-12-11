@@ -1,8 +1,8 @@
 import React from 'react';
 
-const UserImg = ({ image = '', width = 60, height = 60 }) => (
+const Avatar = ({ image = '', width = 60, height = 60 }) => (
   <img
-    className="UserImg"
+    className="Avatar"
     src={image}
     alt="user avatar"
     width={width}
@@ -10,4 +10,4 @@ const UserImg = ({ image = '', width = 60, height = 60 }) => (
   />
 );
 
-export default UserImg;
+export default Avatar;
