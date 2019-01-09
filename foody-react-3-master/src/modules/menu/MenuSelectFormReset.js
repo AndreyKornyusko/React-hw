@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MenuSelectFormReset = ({ categor, onSubmit }) => (
+const MenuSelectFormReset = ({ categor }) => (
   <>
     <button
       type="button"

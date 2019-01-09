@@ -89,8 +89,9 @@ class MenuGridContainer extends Component {
 
     e.preventDefault();
     const { history, location } = this.props;
-    return history.replace({
-      pathname: location.pathname,
+    return history.push({
+      pathname: routes.MENU,
+      search: '',
     });
 
     this.setState({ isCategoryChanged: false });
@@ -123,10 +124,11 @@ class MenuGridContainer extends Component {
             options={categories}
             value={currentCategory}
             onChange={this.handleCategoryChange}
+            onSubmit={this.handleResetFormFilter}
           >
             <MenuSelectFormReset
               categor={category}
-              onSubmit={this.handleResetFormFilter}
+              // onSubmit={this.handleResetFormFilter}
             />
           </MenuCategorySelectForm>
         ) : (
@@ -136,11 +138,6 @@ class MenuGridContainer extends Component {
             onChange={this.handleCategoryChange}
           />
         )}
-
-        {/* <MenuSelectFormReset
-              categor={category}
-              onSubmit={this.handleResetFormFilter}
-            /> */}
 
         {loading && <Loader />}
         {error && <h1>Error</h1>}
