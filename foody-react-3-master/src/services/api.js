@@ -1,22 +1,28 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3000/history';
+axios.defaults.baseURL = 'http://localhost:3000';
 
-const getAllOrderHistoryItems = () =>
-  axios.get(BASE_URL).then(response => response.data);
+export const getAllMenuItems = async () => {
+  const response = await axios.get('/menu');
+  return response.data;
+};
 
-const getOrderHistoryById = id =>
-  axios.get(`${BASE_URL}/${id}`).then(response => response.data);
+export const getCategories = async () => {
+  const response = await axios.get('/categories');
+  return response.data;
+};
 
-const deleteOrderHistoryItem = id =>
-  axios.delete(`${BASE_URL}/${id}`).then(response => response.status === 200);
+export const getMenuItemById = async id => {
+  const response = await axios.get(`/menu/${id}`);
+  return response.data;
+};
 
-const addOrderHistoryItem = item =>
-  axios.post(BASE_URL, item).then(response => response.data);
+export const getMenuItemsWithCategory = async category => {
+  const response = await axios.get(`/menu?category=${category}`);
+  return response.data;
+};
 
-export {
-  getAllOrderHistoryItems,
-  getOrderHistoryById,
-  deleteOrderHistoryItem,
-  addOrderHistoryItem,
+export const postMenuItem = async item => {
+  const response = await axios.post(`/menu`, item);
+  return response;
 };
