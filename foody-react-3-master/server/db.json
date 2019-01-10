@@ -142,6 +142,30 @@
       "image": "https://s1.eda.ru/StaticContent/Photos/140812180013/140820212258/p_O.jpg",
       "price": "22",
       "id": 10
+    },
+    {
+      "name": "kjkkk",
+      "description": "dfdgdgh",
+      "category": "dessert",
+      "image": "https://s1.eda.ru/StaticContent/Photos/140812180013/140820212258/p_O.jpg",
+      "price": "22",
+      "id": 11
+    },
+    {
+      "name": "kjkkk",
+      "description": "dfdgdgh",
+      "category": "dessert",
+      "image": "https://s1.eda.ru/StaticContent/Photos/140812180013/140820212258/p_O.jpg",
+      "price": "22",
+      "id": 12
+    },
+    {
+      "name": "kjkkk",
+      "description": "sfdgsg",
+      "category": "dessert",
+      "image": "https://s1.eda.ru/StaticContent/Photos/140812180013/140820212258/p_O.jpg",
+      "price": "22",
+      "id": 13
     }
   ],
   "categories": [

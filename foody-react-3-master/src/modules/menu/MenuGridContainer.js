@@ -48,11 +48,7 @@ class MenuGridContainer extends Component {
         });
     }
 
-    API.getMenuItemsWithCategory(category)
-      .then(menu => this.setState({ menu, loading: false }))
-      .catch(error => {
-        this.setState({ error, loading: false });
-      });
+    this.getCategories(category);
   }
 
   componentDidUpdate(prevProps) {

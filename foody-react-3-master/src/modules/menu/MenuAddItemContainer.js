@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import * as API from '../../services/api';
+import routes from '../../configs/routes';
 
 import MenuAddItemView from './MenuAddItemView';
 
@@ -36,7 +37,7 @@ class AddItemContainer extends Component {
     API.postMenuItem({ ...newItem }).then(res => {
       if (res.status !== 201) return;
       history.replace({
-        pathname: '/menu',
+        pathname: routes.MENU,
       });
     });
   };
