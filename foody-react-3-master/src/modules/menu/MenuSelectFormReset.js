@@ -1,11 +1,8 @@
 import React from 'react';
 
-const MenuSelectFormReset = ({ categor }) => (
+const MenuSelectFormReset = ({ categor, Submit }) => (
   <>
-    <button
-      type="button"
-      // onSubmit={onSubmit}
-    >
+    <button type="button" onSubmit={Submit}>
       Очистить фильтр
     </button>
     <p> Текущий фильтр: {categor} </p>

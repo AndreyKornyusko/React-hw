@@ -11,10 +11,11 @@ const MenuCategorySelectForm = ({
   value,
   onChange,
   children,
-  onSubmit,
+  Submit,
+  categor,
 }) => (
   <>
-    <form onSubmit={onSubmit}>
+    <div>
       <select
         style={styles.select}
         value={value}
@@ -26,9 +27,8 @@ const MenuCategorySelectForm = ({
           </option>
         ))}
       </select>
-
       {children}
-    </form>
+    </div>
   </>
 );
 

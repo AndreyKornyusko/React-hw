@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import MenuItem from './MenuItemView';
-import Loader from '../../components/Loader';
-import CategorySelector from './MenuCategorySelector';
-import queryString from 'query-string';
 import { withRouter } from 'react-router-dom';
 import CommentForm from './MenucommentFormView';
 import CommentsList from './MenuCommentsList';
@@ -22,7 +19,6 @@ class MenuItemContainer extends Component {
     ingredients: null,
     description: null,
     category: null,
-    comment: '',
     text: '',
     notes: [],
   };
@@ -46,6 +42,7 @@ class MenuItemContainer extends Component {
   };
 
   handleCommentToItem = e => {
+    e.preventDefault();
     // console.log('e.target.name: ', e.target.name);
     // console.log('e.target.value: ', e.target.value);
 
@@ -63,7 +60,7 @@ class MenuItemContainer extends Component {
 
   handleAddNote = text => {
     this.setState(prevState => ({
-      notes: [{ text }, ...prevState.notes],
+      notes: [{ id: Date.now(), text }, ...prevState.notes],
     }));
   };
 
@@ -75,7 +72,6 @@ class MenuItemContainer extends Component {
       ingredients,
       price,
       image,
-      comment,
       text,
       notes,
     } = this.state;
@@ -94,9 +90,9 @@ class MenuItemContainer extends Component {
           <CommentForm
             addComment={this.addCommentToItem}
             handleChange={this.handleCommentToItem}
-            text={comment}
+            text={text}
           />
-          <CommentsList notes={this.state.notes} />
+          <CommentsList notes={notes} />
         </MenuItem>
       </div>
     );

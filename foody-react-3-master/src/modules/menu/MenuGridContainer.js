@@ -27,7 +27,6 @@ class MenuGridContainer extends Component {
     error: null,
     categories: [],
     isCategoryChanged: false,
-    category: '',
   };
 
   componentDidMount() {
@@ -36,7 +35,6 @@ class MenuGridContainer extends Component {
       .then(categories => this.setState({ categories }));
 
     const category = getCategoryFromProps(this.props);
-    this.setState({ category });
 
     this.setState({ loading: true });
 
@@ -58,7 +56,6 @@ class MenuGridContainer extends Component {
     if (prevCategory === nextCategory) return;
 
     this.getCategories(nextCategory);
-    this.setState({ category: nextCategory });
 
     this.setState({ isCategoryChanged: true });
   }
@@ -84,26 +81,19 @@ class MenuGridContainer extends Component {
     console.log('yes!');
 
     e.preventDefault();
+    this.setState({ isCategoryChanged: false });
+
     const { history, location } = this.props;
     return history.push({
-      pathname: routes.MENU,
+      pathname: location.pathname,
       search: '',
     });
-
-    this.setState({ isCategoryChanged: false });
   };
 
   render() {
     const currentCategory = getCategoryFromProps(this.props);
 
-    const {
-      menu,
-      loading,
-      error,
-      categories,
-      isCategoryChanged,
-      category,
-    } = this.state;
+    const { menu, loading, error, categories, isCategoryChanged } = this.state;
 
     return (
       <div>
@@ -115,25 +105,20 @@ class MenuGridContainer extends Component {
           Добавить элемент меню
         </NavLink>
 
-        {isCategoryChanged ? (
+        {
           <MenuCategorySelectForm
             options={categories}
             value={currentCategory}
             onChange={this.handleCategoryChange}
-            onSubmit={this.handleResetFormFilter}
           >
-            <MenuSelectFormReset
-              categor={category}
-              // onSubmit={this.handleResetFormFilter}
-            />
+            {isCategoryChanged && (
+              <MenuSelectFormReset
+                categor={currentCategory}
+                Submit={this.handleResetFormFilter}
+              />
+            )}
           </MenuCategorySelectForm>
-        ) : (
-          <MenuCategorySelectForm
-            options={categories}
-            value={currentCategory}
-            onChange={this.handleCategoryChange}
-          />
-        )}
+        }
 
         {loading && <Loader />}
         {error && <h1>Error</h1>}

@@ -12,8 +12,7 @@ const MenuItemView = ({
 }) => (
   <div>
     <button type="button" onClick={goBackToMenu}>
-      {' '}
-      Назад к меню{' '}
+      Назад к меню
     </button>
     <img src={image} alt={name} width={320} height={240} />
     <p>Name: {name}</p>
