@@ -82,17 +82,19 @@ class MenuGridContainer extends Component {
 
     this.setState({ loading: true });
 
-    const { history, location } = this.props;
-    history.push({
-      pathname: location.pathname,
-      search: '',
-    });
-
     API.getAllMenuItems()
-      .then(menu => this.setState({ menu, loading: false }))
+      .then(menu => {
+        const { history, location } = this.props;
+        history.push({
+          pathname: location.pathname,
+          search: '',
+        });
+        this.setState({ menu, loading: false });
+      })
       .catch(error => {
         this.setState({ error, loading: false });
       });
+
     this.setState({ isCategoryChanged: false });
   };
 
