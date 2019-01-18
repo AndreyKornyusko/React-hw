@@ -78,16 +78,22 @@ class MenuGridContainer extends Component {
   };
 
   handleResetFormFilter = e => {
-    console.log('yes!');
-
     e.preventDefault();
-    this.setState({ isCategoryChanged: false });
+
+    this.setState({ loading: true });
 
     const { history, location } = this.props;
-    return history.push({
+    history.push({
       pathname: location.pathname,
       search: '',
     });
+
+    API.getAllMenuItems()
+      .then(menu => this.setState({ menu, loading: false }))
+      .catch(error => {
+        this.setState({ error, loading: false });
+      });
+    this.setState({ isCategoryChanged: false });
   };
 
   render() {
