@@ -57,7 +57,7 @@ class MenuGridContainer extends Component {
 
     this.getCategories(nextCategory);
 
-    this.setState({ isCategoryChanged: true });
+    this.setState({ isCategoryChanged: !this.state.isCategoryChanged });
   }
 
   getCategories = category => {
@@ -89,13 +89,13 @@ class MenuGridContainer extends Component {
           pathname: location.pathname,
           search: '',
         });
-        this.setState({ menu, loading: false });
+
+        // console.log('menu',menu);
+        this.setState({ menu, loading: false, isCategoryChanged: false });
       })
       .catch(error => {
         this.setState({ error, loading: false });
       });
-
-    this.setState({ isCategoryChanged: false });
   };
 
   render() {
