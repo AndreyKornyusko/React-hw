@@ -57,7 +57,15 @@ class MenuGridContainer extends Component {
 
     this.getCategories(nextCategory);
 
-    this.setState({ isCategoryChanged: !this.state.isCategoryChanged });
+    if (!this.state.isCategoryChanged) {
+      API.getAllMenuItems()
+        .then(menu => {
+          this.setState({ menu, loading: false });
+        })
+        .catch(error => {
+          this.setState({ error, loading: false });
+        });
+    }
   }
 
   getCategories = category => {
@@ -75,27 +83,19 @@ class MenuGridContainer extends Component {
       pathname: this.props.location.pathname,
       search: `category=${category}`,
     });
+
+    this.setState({ isCategoryChanged: true });
   };
 
   handleResetFormFilter = e => {
     e.preventDefault();
+    this.setState({ isCategoryChanged: false });
 
-    this.setState({ loading: true });
-
-    API.getAllMenuItems()
-      .then(menu => {
-        const { history, location } = this.props;
-        history.push({
-          pathname: location.pathname,
-          search: '',
-        });
-
-        // console.log('menu',menu);
-        this.setState({ menu, loading: false, isCategoryChanged: false });
-      })
-      .catch(error => {
-        this.setState({ error, loading: false });
-      });
+    const { history, location } = this.props;
+    history.push({
+      pathname: location.pathname,
+      search: '',
+    });
   };
 
   render() {
