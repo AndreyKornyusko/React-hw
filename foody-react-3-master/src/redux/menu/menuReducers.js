@@ -4,14 +4,14 @@ import { combineReducers } from 'redux';
 function menuReducer(state = [], { type, payload }) {
   switch (type) {
     case types.FETCH_SUCCESS:
-      return payload;
-    //  payload.ids
+      return payload.ids;
+
     default:
       return state;
   }
 }
 
-function categoryReducer(state = null, { type, payload }) {
+function categoryReducer(state = [], { type, payload }) {
   switch (type) {
     case types.FETCH_FOOD_CATEGORIES:
       return payload;
@@ -28,10 +28,10 @@ function error(state = null, { type, payload }) {
       return state;
   }
 }
-function itemById(state = [], { type, payload }) {
+function itemByIdReducer(state = [], { type, payload }) {
   switch (type) {
-    case types.ITEM_ID:
-      return payload.ids;
+    case types.GET_ITEM_ID:
+      return payload;
     default:
       return state;
   }
@@ -39,7 +39,7 @@ function itemById(state = [], { type, payload }) {
 
 export default combineReducers({
   menuIds: menuReducer,
-  itemById,
+  itemById: itemByIdReducer,
   categories: categoryReducer,
   error,
 });

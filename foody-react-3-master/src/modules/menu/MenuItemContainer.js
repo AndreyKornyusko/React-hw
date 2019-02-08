@@ -3,8 +3,10 @@ import MenuItem from './MenuItemView';
 import { withRouter } from 'react-router-dom';
 import CommentForm from './MenucommentFormView';
 import CommentsList from './MenuCommentsList';
+import { connect } from 'react-redux';
+import routes from '../../configs/routes';
 
-import * as API from '../../services/api';
+import { asyncOperation, menuSelectors } from '../../redux/menu';
 
 const INITIAL_STATE = {
   text: '',
@@ -12,33 +14,23 @@ const INITIAL_STATE = {
 
 class MenuItemContainer extends Component {
   state = {
-    id: null,
-    name: null,
-    image: null,
-    price: null,
-    ingredients: null,
-    description: null,
     category: null,
     text: '',
     notes: [],
   };
 
   componentDidMount() {
-    API.getMenuItemById(this.props.id).then(item => this.setState({ ...item }));
+    this.props.getItemById(this.props.match.params.id);
   }
 
   handleGoBackToMenu = () => {
     const { history, location } = this.props;
-    const { category } = this.state;
 
     if (location.state) {
       return history.push(location.state.from);
     }
 
-    return history.push({
-      pathname: '/menu',
-      search: `?category=${category}`,
-    });
+    return history.push(routes.MENU);
   };
 
   handleCommentToItem = e => {
@@ -72,9 +64,9 @@ class MenuItemContainer extends Component {
       ingredients,
       price,
       image,
-      text,
-      notes,
-    } = this.state;
+    } = this.props.menuItem;
+
+    const { text, notes } = this.state;
 
     return (
       <div>
@@ -99,4 +91,15 @@ class MenuItemContainer extends Component {
   }
 }
 
-export default withRouter(MenuItemContainer);
+const mapStateToProps = state => ({
+  menuItem: menuSelectors.getItemById(state),
+  // state: state,
+});
+const mapDispatchToProps = {
+  getItemById: asyncOperation.fetchMenuItemsById,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withRouter(MenuItemContainer));

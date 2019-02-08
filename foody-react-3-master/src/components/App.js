@@ -12,6 +12,8 @@ import DeliveryPage from '../pages/Delivery';
 import AccountPage from '../pages/Account';
 import OrderHistoryPage from '../pages/OrderHistory';
 import MealPlannerPage from '../pages/Planner';
+import CartPage from '../pages/Cart';
+
 import routes from '../configs/routes';
 
 const App = () => (
@@ -29,6 +31,7 @@ const App = () => (
       <Route path={routes.ACCOUNT} component={AccountPage} />
       <Route path={routes.ORDER_HISTORY} component={OrderHistoryPage} />
       <Route path={routes.PLANNER} component={MealPlannerPage} />
+      <Route path={routes.CART} component={CartPage} />
       <Redirect to="/" />
     </Switch>
   </div>

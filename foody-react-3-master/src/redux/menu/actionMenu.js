@@ -8,27 +8,21 @@ const fetchRequest = () => ({
 });
 
 const fetchSuccess = menuItems => {
-  // const normMenu = normalize(menuItems, [schema.menuSchema]);
+  const normMenu = normalize(menuItems, [schema.menuSchema]);
 
   return {
     type: types.FETCH_SUCCESS,
-    payload: menuItems,
-    // {
-    //   ids: Object.keys(normMenu.entities.menu),
-    //   entities: normMenu.entities,
-    // },
+    payload: {
+      ids: Object.keys(normMenu.entities.menu),
+      entities: normMenu.entities,
+    },
   };
 };
 
 const fetchItemById = item => {
-  const normItem = normalize([].concat(item), [schema.menuIdSchema]);
-
   return {
-    type: types.ITEM_ID,
-    payload: {
-      ids: Object.keys(normItem.entities.itemsById),
-      entities: normItem.entities,
-    },
+    type: types.GET_ITEM_ID,
+    payload: item,
   };
 };
 

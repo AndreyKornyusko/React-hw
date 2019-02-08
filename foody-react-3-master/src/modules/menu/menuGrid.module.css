@@ -1,0 +1,20 @@
+.containerMenu {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.itemCard {
+  padding: 20px;
+  list-style: none;
+}
+
+.cartContainer {
+  margin: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  width: 200px;
+  border: 1px solid black;
+  box-shadow: 6px 6px 18px 0px rgba(0, 0, 0, 0.75);
+}

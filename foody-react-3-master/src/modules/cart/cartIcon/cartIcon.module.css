@@ -1,0 +1,18 @@
+.container {
+  position: relative;
+}
+
+.amount {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  background-color: rgb(142, 153, 153);
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 500;
+  line-height: 25px;
+  text-align: center;
+  font-size: 20px;
+}

@@ -11,17 +11,17 @@ const fetchMenuItems = () => dispatch => {
   dispatch(action.fetchRequest());
 
   getAllMenuItems()
-    .then(Items => {
-      // console.log('Items', Items);
-      dispatch(action.fetchSuccess(Items));
-    })
+    .then(Items => dispatch(action.fetchSuccess(Items)))
     .catch(error => dispatch(action.fetchError(error)));
 };
 
 const fetchMenuItemsById = id => dispatch => {
   dispatch(action.fetchRequest());
   getItemsById(id)
-    .then(item => dispatch(action.fetchItemById(item)))
+    .then(item => {
+      // console.log('menuitem', item);
+      dispatch(action.fetchItemById(item));
+    })
     .catch(error => dispatch(action.fetchError(error)));
 };
 
@@ -29,11 +29,7 @@ const fetchFoodCategories = () => dispatch => {
   dispatch(action.fetchRequest());
   getCategories()
     .then(categories => categories.map(item => item.name))
-    .then(categories => {
-      console.log('categories', categories);
-
-      dispatch(action.fetchFoodCategies(categories));
-    })
+    .then(categories => dispatch(action.fetchFoodCategies(categories)))
     .catch(error => dispatch(action.fetchError(error)));
 };
 
