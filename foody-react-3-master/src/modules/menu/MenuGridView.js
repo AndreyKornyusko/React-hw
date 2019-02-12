@@ -15,7 +15,6 @@ const MenuGrid = ({ items, addToCart }) => (
               <MenuCard {...item} />
             </Link>
             <button type="button" onClick={() => addToCart(item.id)}>
-              {' '}
               Добавить в корзину
             </button>
           </li>

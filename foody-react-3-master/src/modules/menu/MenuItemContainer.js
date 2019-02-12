@@ -25,12 +25,18 @@ class MenuItemContainer extends Component {
 
   handleGoBackToMenu = () => {
     const { history, location } = this.props;
+    const { category } = this.state;
+    console.log('category', category);
+    console.log('location state', location);
 
     if (location.state) {
       return history.push(location.state.from);
     }
 
-    return history.push(routes.MENU);
+    return history.push({
+      pathname: '/menu',
+      search: `?category=${category}`,
+    });
   };
 
   handleCommentToItem = e => {
