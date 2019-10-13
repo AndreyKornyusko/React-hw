@@ -5,12 +5,16 @@ import CommentForm from './MenucommentFormView';
 import CommentsList from './MenuCommentsList';
 import { connect } from 'react-redux';
 import routes from '../../configs/routes';
+import queryString from 'query-string';
 
 import { asyncOperation, menuSelectors } from '../../redux/menu';
 
 const INITIAL_STATE = {
   text: '',
 };
+
+const getCategoryFromProps = props =>
+  queryString.parse(props.location.search).category;
 
 class MenuItemContainer extends Component {
   state = {
@@ -25,7 +29,7 @@ class MenuItemContainer extends Component {
 
   handleGoBackToMenu = () => {
     const { history, location } = this.props;
-    const { category } = this.state;
+    const category = getCategoryFromProps(this.props);
     console.log('category', category);
     console.log('location state', location);
 
