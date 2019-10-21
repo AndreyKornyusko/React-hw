@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = 'https://my-cool-projectapi.herokuapp.com/';
 
 export const getAllMenuItems = async () => {
   const response = await axios.get('/menu');
